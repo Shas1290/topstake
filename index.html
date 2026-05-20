@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Smart Sticky Navbar – hides on scroll down and reappears on scroll up for a distraction-free browsing experience." />
+  <title>Smart Sticky Navbar</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== Reset & Base ===== */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #0b0d17;
+      color: #c9cdd8;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ===== Navbar ===== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(1.25rem, 4vw, 3rem);
+      height: 72px;
+      background: rgba(14, 16, 28, 0.72);
+      backdrop-filter: blur(18px) saturate(160%);
+      -webkit-backdrop-filter: blur(18px) saturate(160%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                  box-shadow 0.35s ease;
+      will-change: transform;
+    }
+
+    .navbar.scrolled {
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.45);
+    }
+
+    /* Hidden state */
+    .navbar.nav-hidden {
+      transform: translateY(-100%);
+    }
+
+    /* ---- Logo ---- */
+    .navbar__logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .navbar__logo-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+      display: grid;
+      place-items: center;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #fff;
+      box-shadow: 0 0 18px rgba(99, 102, 241, 0.45);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .navbar__logo:hover .navbar__logo-icon {
+      transform: rotate(-8deg) scale(1.08);
+      box-shadow: 0 0 26px rgba(168, 85, 247, 0.6);
+    }
+
+    /* ---- Nav Links ---- */
+    .navbar__links {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      list-style: none;
+    }
+
+    .navbar__links a {
+      position: relative;
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      color: #a1a5b5;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: color 0.25s ease, background 0.25s ease;
+    }
+
+    .navbar__links a::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, #6366f1, #a855f7);
+      transition: width 0.3s ease, left 0.3s ease;
+    }
+
+    .navbar__links a:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .navbar__links a:hover::after {
+      width: 50%;
+      left: 25%;
+    }
+
+    .navbar__links .btn-cta {
+      margin-left: 0.5rem;
+      padding: 0.5rem 1.35rem;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      color: #fff;
+      border-radius: 8px;
+      font-weight: 600;
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+    }
+
+    .navbar__links .btn-cta::after {
+      display: none;
+    }
+
+    .navbar__links .btn-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 28px rgba(99, 102, 241, 0.5);
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+    }
+
+    /* ===== Hero Section ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 7rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      color: #818cf8;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 1.8rem;
+      letter-spacing: 0.02em;
+    }
+
+    .hero__badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #6366f1;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5.5vw, 4.2rem);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      max-width: 750px;
+    }
+
+    .hero h1 .gradient-text {
+      background: linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #f472b6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      margin-top: 1.4rem;
+      font-size: clamp(1rem, 1.6vw, 1.15rem);
+      max-width: 560px;
+      color: #8189a3;
+    }
+
+    .hero__scroll-hint {
+      margin-top: 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: #555b74;
+      font-size: 0.8rem;
+      font-weight: 500;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .hero__scroll-hint .arrow {
+      width: 24px;
+      height: 24px;
+      border-right: 2px solid #555b74;
+      border-bottom: 2px solid #555b74;
+      transform: rotate(45deg);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
+
+    /* ===== Content Sections ===== */
+    .content-section {
+      padding: 6rem 2rem;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .content-section h2 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: #e2e4eb;
+      margin-bottom: 1.2rem;
+      letter-spacing: -0.02em;
+    }
+
+    .content-section p {
+      margin-bottom: 1.4rem;
+      color: #8a90a6;
+      font-size: 1.02rem;
+    }
+
+    .section-divider {
+      width: 60px;
+      height: 3px;
+      border-radius: 3px;
+      background: linear-gradient(90deg, #6366f1, #a855f7);
+      margin-bottom: 2rem;
+    }
+
+    /* ===== Card Grid ===== */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem 2rem 6rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      padding: 2rem;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(99, 102, 241, 0.3);
+      box-shadow: 0 8px 40px rgba(99, 102, 241, 0.1);
+    }
+
+    .card__icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .card__icon--purple { background: rgba(99, 102, 241, 0.12); }
+    .card__icon--pink   { background: rgba(236, 72, 153, 0.12); }
+    .card__icon--teal    { background: rgba(20, 184, 166, 0.12); }
+
+    .card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #e2e4eb;
+      margin-bottom: 0.6rem;
+    }
+
+    .card p {
+      font-size: 0.92rem;
+      color: #7a7f96;
+      line-height: 1.65;
+    }
+
+    /* ===== Footer ===== */
+    .footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: #44485c;
+      font-size: 0.85rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 640px) {
+      .navbar__links a:not(.btn-cta) {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== NAVBAR ========== -->
+  <nav class="navbar" id="navbar">
+    <a href="#" class="navbar__logo">
+      <span class="navbar__logo-icon">T</span>
+      TopStake
+    </a>
+
+    <ul class="navbar__links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#blog">Blog</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#" class="btn-cta">Get Started</a></li>
+    </ul>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero" id="hero">
+    <span class="hero__badge"><span class="dot"></span> Scroll to see the magic</span>
+    <h1>A Navbar That <span class="gradient-text">Gets Out of Your Way</span></h1>
+    <p>Scroll down and the navbar slides away. Scroll back up and it reappears instantly — smooth, smart, and distraction-free.</p>
+
+    <div class="hero__scroll-hint">
+      <span>Scroll down</span>
+      <div class="arrow"></div>
+    </div>
+  </section>
+
+  <!-- ========== CONTENT ========== -->
+  <section class="content-section" id="features">
+    <div class="section-divider"></div>
+    <h2>Why Smart Navbars Matter</h2>
+    <p>Traditional fixed navbars permanently occupy precious screen real-estate, especially on mobile devices. A smart navbar solves this by dynamically showing and hiding based on the user's scroll direction, maximising the content viewing area without sacrificing quick access to navigation.</p>
+    <p>This pattern is widely used across modern applications — from Medium and Google Chrome's mobile tab bar to countless progressive web apps — because it strikes the perfect balance between accessibility and immersion.</p>
+  </section>
+
+  <section class="content-section" id="about">
+    <div class="section-divider"></div>
+    <h2>How It Works Under the Hood</h2>
+    <p>The implementation is deceptively simple: a single scroll event listener compares the current <code>window.scrollY</code> against the last recorded position. If the delta is positive (scrolling down), a CSS class is toggled that applies <code>transform: translateY(-100%)</code> — sliding the navbar upward out of view. When the delta reverses, the class is removed and the navbar smoothly transitions back into position.</p>
+    <p>Edge-case handling ensures the scroll position is clamped to zero to avoid negative values caused by elastic (bounce) scrolling on macOS and iOS. The entire script weighs in at fewer than 20 lines of vanilla JavaScript — no frameworks, no dependencies.</p>
+  </section>
+
+  <section class="content-section" id="blog">
+    <div class="section-divider"></div>
+    <h2>Design Principles</h2>
+    <p>The glassmorphism styling uses <code>backdrop-filter: blur()</code> to create a frosted-glass effect, allowing underlying content to subtly show through while maintaining legibility. The dark palette centres around deep navy tones with indigo and purple accent gradients.</p>
+    <p>Micro-interactions — like the underline that grows on hover, the rotating logo icon, and the floating scroll-hint — add a layer of polish that makes the interface feel responsive and alive without being distracting.</p>
+  </section>
+
+  <!-- ========== CARDS ========== -->
+  <div class="card-grid" id="contact">
+    <div class="card">
+      <div class="card__icon card__icon--purple">⚡</div>
+      <h3>Zero Dependencies</h3>
+      <p>Pure HTML, CSS, and vanilla JavaScript. No libraries, no build step — just copy and paste.</p>
+    </div>
+    <div class="card">
+      <div class="card__icon card__icon--pink">🎨</div>
+      <h3>Smooth Animations</h3>
+      <p>CSS transitions with cubic-bezier easing deliver buttery 60fps hide & show animations.</p>
+    </div>
+    <div class="card">
+      <div class="card__icon card__icon--teal">📱</div>
+      <h3>Edge-Case Safe</h3>
+      <p>Handles elastic bounce scrolling on iOS/macOS and clamps scroll values to prevent glitches.</p>
+    </div>
+  </div>
+
+  <!-- Spacer for extra scrollability -->
+  <section class="content-section">
+    <div class="section-divider"></div>
+    <h2>Keep Scrolling</h2>
+    <p>This extra content exists purely to give you more room to scroll and experience the navbar behaviour in action. Try scrolling down slowly, then quickly flick upward — the navbar snaps back into view with a satisfying slide.</p>
+    <p>On mobile, open this page in your device's browser and notice how the navbar stays out of the way while you read, but is always just one upward swipe away. It's a tiny UX detail that makes a surprising difference in how a page feels to use.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras vehicula, mi eget laoreet venenatis, dui eros faucibus ligula, vel fringilla felis eros vitae ante. Nulla facilisi. Mauris auctor, nulla eget ultricies scelerisque, sapien libero lobortis nunc, non tristique ligula arcu sed erat.</p>
+    <p>Phasellus imperdiet, nulla et dictum interdum, nisi lorem egestas odio, vitae scelerisque enim ligula venenatis dolor. Maecenas nisl est, ultrices nec congue eget, auctor vitae massa. Fusce luctus vestibulum augue ut facilisis. Cras imperdiet nunc nec congue consequat.</p>
+    <p>Aenean vel elit scelerisque, laoreet sapien a, varius urna. Praesent lacinia lacus sit amet orci blandit euismod. Curabitur blandit tempus porttitor. Nullam quis risus eget urna mollis ornare vel eu leo. Donec ullamcorper nulla non metus auctor fringilla.</p>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    &copy; 2026 TopStake. Smart Sticky Navbar Demo.
+  </footer>
+
+  <!-- ========== JAVASCRIPT ========== -->
+  <script>
+    (function () {
+      'use strict';
+
+      const navbar = document.getElementById('navbar');
+      let lastScrollTop = 0;
+
+      window.addEventListener('scroll', function () {
+        // Current scroll position, clamped to 0 for bounce-scroll edge case
+        const currentScroll = Math.max(0, window.scrollY || document.documentElement.scrollTop);
+
+        if (currentScroll > lastScrollTop && currentScroll > navbar.offsetHeight) {
+          // Scrolling DOWN — hide the navbar
+          navbar.classList.add('nav-hidden');
+        } else {
+          // Scrolling UP — show the navbar
+          navbar.classList.remove('nav-hidden');
+        }
+
+        // Toggle shadow when page is scrolled past 10px
+        navbar.classList.toggle('scrolled', currentScroll > 10);
+
+        lastScrollTop = currentScroll;
+      }, { passive: true });
+    })();
+  </script>
+
+</body>
+</html>
