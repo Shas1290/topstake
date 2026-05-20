@@ -1,0 +1,258 @@
+.footer {
+  background-color: #000000;
+  color: #ffffff;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  padding: 4rem 5% 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+  z-index: 10;
+}
+
+.topSection {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 4rem;
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: -1px;
+  background: linear-gradient(90deg, #ffffff, #a5b4fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-decoration: none;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto 4rem;
+}
+
+.column h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0;
+}
+
+.columnHeader {
+  display: block;
+  margin-bottom: 1.5rem;
+}
+
+.toggleCheckbox {
+  display: none;
+}
+
+.chevron {
+  display: none;
+}
+
+.columnContent {
+  display: block;
+}
+
+.linkList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.linkList a {
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+.linkList a:hover {
+  color: #ffffff;
+}
+
+.appButtons {
+  display: flex;
+  gap: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto 3rem;
+}
+
+.appButton {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #000;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 0.5rem 1.25rem;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.appButton:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.appButton svg {
+  width: 28px;
+  height: 28px;
+}
+
+.appButtonText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.appButtonText span:first-child {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: #94a3b8;
+  margin-bottom: 2px;
+}
+
+.appButtonText span:last-child {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.bottomSection {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.settings {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.settingButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 24px;
+  padding: 0.6rem 1.25rem;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.settingButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.socials {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  justify-content: flex-end;
+}
+
+.socials a {
+  color: #fff;
+  transition: color 0.2s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.socials a:hover {
+  color: #a5b4fc;
+  transform: translateY(-2px);
+}
+
+.address {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  text-align: right;
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .column {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .columnHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 0;
+    padding: 1.25rem 0;
+  }
+  .chevron {
+    display: block;
+    color: #94a3b8;
+    transition: transform 0.3s ease;
+  }
+  .columnContent {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease;
+  }
+  .linkList {
+    overflow: hidden;
+    padding-bottom: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease, padding-bottom 0.3s ease;
+  }
+  .toggleCheckbox:checked ~ .columnContent {
+    grid-template-rows: 1fr;
+  }
+  .toggleCheckbox:checked ~ .columnContent .linkList {
+    padding-bottom: 1.25rem;
+    opacity: 1;
+  }
+  .toggleCheckbox:checked ~ .columnHeader .chevron {
+    transform: rotate(180deg);
+  }
+  .bottomSection {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .socials {
+    justify-content: flex-start;
+  }
+  .address {
+    text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .appButtons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .settings {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
