@@ -1,6 +1,12 @@
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_APP_PASSWORD,
+  },
+});
 
 interface ThankYouEmailProps {
   to: string;
@@ -50,7 +56,7 @@ function buildThankYouHTML({ name, subject, message }: Omit<ThankYouEmailProps, 
                 <tr>
                   <td align="center" style="padding-bottom:24px;">
                     <div style="width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,0.2);border:2px solid rgba(255,255,255,0.3);display:inline-block;line-height:72px;text-align:center;">
-                      <span style="font-size:36px;color:#ffffff;">✓</span>
+                      <span style="font-size:36px;color:#ffffff;">&#10003;</span>
                     </div>
                   </td>
                 </tr>
@@ -114,7 +120,7 @@ function buildThankYouHTML({ name, subject, message }: Omit<ThankYouEmailProps, 
                       While you wait, explore what TopStake has to offer:
                     </p>
                     <a href="https://topstake.vercel.app" style="display:inline-block;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#ffffff;text-decoration:none;padding:14px 36px;border-radius:12px;font-size:15px;font-weight:600;letter-spacing:0.5px;box-shadow:0 4px 20px rgba(99,102,241,0.4);">
-                      Visit TopStake →
+                      Visit TopStake &#8594;
                     </a>
                   </td>
                 </tr>
@@ -138,7 +144,7 @@ function buildThankYouHTML({ name, subject, message }: Omit<ThankYouEmailProps, 
               <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto 20px;">
                 <tr>
                   <td style="padding:0 8px;">
-                    <a href="#" style="display:inline-block;width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);text-align:center;line-height:36px;color:#9ca3af;text-decoration:none;font-size:14px;">𝕏</a>
+                    <a href="#" style="display:inline-block;width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);text-align:center;line-height:36px;color:#9ca3af;text-decoration:none;font-size:14px;">&#120143;</a>
                   </td>
                   <td style="padding:0 8px;">
                     <a href="#" style="display:inline-block;width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);text-align:center;line-height:36px;color:#9ca3af;text-decoration:none;font-size:14px;">in</a>
@@ -150,7 +156,7 @@ function buildThankYouHTML({ name, subject, message }: Omit<ThankYouEmailProps, 
               </table>
 
               <p style="margin:0 0 8px;font-size:13px;color:#6b7280;">
-                © ${currentYear} TopStake. All rights reserved.
+                &copy; ${currentYear} TopStake. All rights reserved.
               </p>
               <p style="margin:0;font-size:12px;color:#4b5563;">
                 You received this email because you contacted us through our website.
@@ -165,7 +171,7 @@ function buildThankYouHTML({ name, subject, message }: Omit<ThankYouEmailProps, 
           <tr>
             <td align="center" style="padding:24px 0;">
               <p style="margin:0;font-size:12px;color:#374151;">
-                Sent with ❤️ from <span style="color:#8b5cf6;">TopStake</span>
+                Sent with &#10084;&#65039; from <span style="color:#8b5cf6;">TopStake</span>
               </p>
             </td>
           </tr>
@@ -181,20 +187,15 @@ function buildThankYouHTML({ name, subject, message }: Omit<ThankYouEmailProps, 
 
 export async function sendThankYouEmail({ to, name, subject, message }: ThankYouEmailProps) {
   try {
-    const { data, error } = await resend.emails.send({
-      from: "TopStake <onboarding@resend.dev>",
-      to: [to],
+    const info = await transporter.sendMail({
+      from: `"TopStake" <${process.env.GMAIL_USER}>`,
+      to,
       subject: `Thanks for reaching out, ${name}! — TopStake`,
       html: buildThankYouHTML({ name, subject, message }),
     });
 
-    if (error) {
-      console.error("Resend error:", error);
-      return { success: false, error };
-    }
-
-    console.log("Thank-you email sent:", data?.id);
-    return { success: true, id: data?.id };
+    console.log("Thank-you email sent:", info.messageId);
+    return { success: true, id: info.messageId };
   } catch (err) {
     console.error("Failed to send thank-you email:", err);
     return { success: false, error: err };
