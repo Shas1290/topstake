@@ -29,8 +29,8 @@ export default function ContactPage() {
         body: formData
       });
 
-      // Also send to backend API (saves to DB + sends thank-you email to user)
-      const backendResponse = fetch("https://topstake-backend.vercel.app/api/contact", {
+      // Also send to our own API route to trigger the thank-you email
+      const backendResponse = fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
