@@ -121,8 +121,8 @@ export default function SpotlightReveal(): React.JSX.Element {
         />
 
         {/* Bottom Text — muted layer */}
-        <div className="absolute inset-0 z-10 flex flex-col justify-between px-6 sm:px-10 md:px-16 py-10 md:py-14 pointer-events-none">
-          <div className="flex items-start overflow-hidden">
+        <div className="absolute inset-0 z-10 flex flex-col justify-between px-6 sm:px-10 md:px-16 pt-[100px] pb-10 md:pt-[120px] md:pb-14 pointer-events-none">
+          <div className="flex items-start pt-2">
             <span
               className={`${TEXT_BASE} ${TEXT_DARK} drop-shadow-[0_4px_60px_rgba(0,0,0,0.4)] ${getTextClasses()}`}
               style={getEnteringInitialStyle()}
@@ -130,7 +130,7 @@ export default function SpotlightReveal(): React.JSX.Element {
               {currentText.top}
             </span>
           </div>
-          <div className="flex items-end justify-end overflow-hidden">
+          <div className="flex items-end justify-end pb-2">
             <span
               className={`${TEXT_BASE} ${TEXT_DARK} drop-shadow-[0_4px_60px_rgba(0,0,0,0.4)] ${getTextClasses()}`}
               style={{
@@ -167,8 +167,8 @@ export default function SpotlightReveal(): React.JSX.Element {
         />
 
         {/* Top Text — bright layer (inside the loophole) */}
-        <div className="absolute inset-0 z-10 flex flex-col justify-between px-6 sm:px-10 md:px-16 py-10 md:py-14 pointer-events-none">
-          <div className="flex items-start overflow-hidden">
+        <div className="absolute inset-0 z-10 flex flex-col justify-between px-6 sm:px-10 md:px-16 pt-[100px] pb-10 md:pt-[120px] md:pb-14 pointer-events-none">
+          <div className="flex items-start pt-2">
             <span
               className={`${TEXT_BASE} ${TEXT_DARK} drop-shadow-[0_4px_60px_rgba(0,0,0,0.5)] ${getTextClasses()}`}
             >
@@ -176,7 +176,7 @@ export default function SpotlightReveal(): React.JSX.Element {
               {nextText.top}
             </span>
           </div>
-          <div className="flex items-end justify-end overflow-hidden">
+          <div className="flex items-end justify-end pb-2">
             <span
               className={`${TEXT_BASE} ${TEXT_DARK} drop-shadow-[0_4px_60px_rgba(0,0,0,0.5)] ${getTextClasses()}`}
               style={{
