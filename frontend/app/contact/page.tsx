@@ -97,25 +97,25 @@ export default function ContactPage() {
         {/* Right Side: Form */}
         <div className={styles.formSection}>
           <div className={styles.formCard}>
-            <form action="#">
+            <form onSubmit={handleSubmit}>
               <div className={styles.formGroup}>
                 <label htmlFor="name">Full Name</label>
-                <input type="text" id="name" className={styles.input} placeholder="John Doe" required />
+                <input type="text" id="name" name="name" className={styles.input} placeholder="John Doe" required />
               </div>
 
               <div className={styles.formGroup}>
                 <label htmlFor="email">Email Address</label>
-                <input type="email" id="email" className={styles.input} placeholder="john@example.com" required />
+                <input type="email" id="email" name="email" className={styles.input} placeholder="john@example.com" required />
               </div>
 
               <div className={styles.formGroup}>
                 <label htmlFor="subject">Subject</label>
-                <input type="text" id="subject" className={styles.input} placeholder="How can we help?" required />
+                <input type="text" id="subject" name="subject" className={styles.input} placeholder="How can we help?" required />
               </div>
 
               <div className={styles.formGroup}>
                 <label htmlFor="message">Message</label>
-                <textarea id="message" className={styles.textarea} placeholder="Tell us about your project..." required></textarea>
+                <textarea id="message" name="message" className={styles.textarea} placeholder="Tell us about your project..." required></textarea>
               </div>
 
               <button type="submit" className={styles.submitBtn}>
