@@ -119,38 +119,15 @@ export default function SpotlightReveal(): React.JSX.Element {
           className="absolute inset-0 w-full h-full object-cover opacity-60 pointer-events-none"
           src={VIDEOS[currentIndex]}
         />
-
-        {/* Bottom Text — muted layer */}
-        <div className="absolute inset-0 z-10 flex flex-col justify-between px-6 sm:px-10 md:px-16 pt-[100px] pb-10 md:pt-[120px] md:pb-14 pointer-events-none">
-          <div className="flex items-start pt-2">
-            <span
-              className={`${TEXT_BASE} ${TEXT_DARK} drop-shadow-[0_4px_60px_rgba(0,0,0,0.4)] ${getTextClasses()}`}
-              style={getEnteringInitialStyle()}
-            >
-              {currentText.top}
-            </span>
-          </div>
-          <div className="flex items-end justify-end pb-2">
-            <span
-              className={`${TEXT_BASE} ${TEXT_DARK} drop-shadow-[0_4px_60px_rgba(0,0,0,0.4)] ${getTextClasses()}`}
-              style={{
-                ...getEnteringInitialStyle(),
-                transitionDelay: isTextExiting ? "60ms" : isTextEntering ? "80ms" : "0ms",
-              }}
-            >
-              {currentText.bottom}
-            </span>
-          </div>
-        </div>
       </div>
 
       {/* ========================================== */}
-      {/* 2. TOP LAYER: The "Loophole" Video         */}
+      {/* 2. MIDDLE LAYER: The "Loophole" Video      */}
       {/* ========================================== */}
       <div
-        className="absolute inset-0 z-20 pointer-events-none"
+        className="absolute inset-0 z-10 pointer-events-none"
         style={{
-          clipPath: `circle(${isExpanding ? "3000px" : "150px"} at ${mousePosition.x}px ${mousePosition.y}px)`,
+          clipPath: `circle(${isExpanding ? "3000px" : "100px"} at ${mousePosition.x}px ${mousePosition.y}px)`,
           transition: isExpanding
             ? "clip-path 0.7s cubic-bezier(0.76, 0, 0.24, 1)"
             : "none",
@@ -165,27 +142,30 @@ export default function SpotlightReveal(): React.JSX.Element {
           className="absolute inset-0 w-full h-full object-cover"
           src={VIDEOS[nextVideoIndex]}
         />
+      </div>
 
-        {/* Top Text — bright layer (inside the loophole) */}
-        <div className="absolute inset-0 z-10 flex flex-col justify-between px-6 sm:px-10 md:px-16 pt-[100px] pb-10 md:pt-[120px] md:pb-14 pointer-events-none">
-          <div className="flex items-start pt-2">
-            <span
-              className={`${TEXT_BASE} ${TEXT_DARK} drop-shadow-[0_4px_60px_rgba(0,0,0,0.5)] ${getTextClasses()}`}
-            >
-              {/* The loophole always shows the NEXT text */}
-              {nextText.top}
-            </span>
-          </div>
-          <div className="flex items-end justify-end pb-2">
-            <span
-              className={`${TEXT_BASE} ${TEXT_DARK} drop-shadow-[0_4px_60px_rgba(0,0,0,0.5)] ${getTextClasses()}`}
-              style={{
-                transitionDelay: isTextExiting ? "60ms" : isTextEntering ? "80ms" : "0ms",
-              }}
-            >
-              {nextText.top === currentText.top ? nextText.bottom : nextText.bottom}
-            </span>
-          </div>
+      {/* ========================================== */}
+      {/* 3. TOP LAYER: Text (always above circle)   */}
+      {/* ========================================== */}
+      <div className="absolute inset-0 z-20 flex flex-col justify-between px-6 sm:px-10 md:px-16 pt-[100px] pb-10 md:pt-[120px] md:pb-14 pointer-events-none">
+        <div className="flex items-start pt-2">
+          <span
+            className={`${TEXT_BASE} ${TEXT_DARK} drop-shadow-[0_4px_60px_rgba(0,0,0,0.4)] ${getTextClasses()}`}
+            style={getEnteringInitialStyle()}
+          >
+            {currentText.top}
+          </span>
+        </div>
+        <div className="flex items-end justify-end pb-2">
+          <span
+            className={`${TEXT_BASE} ${TEXT_DARK} drop-shadow-[0_4px_60px_rgba(0,0,0,0.4)] ${getTextClasses()}`}
+            style={{
+              ...getEnteringInitialStyle(),
+              transitionDelay: isTextExiting ? "60ms" : isTextEntering ? "80ms" : "0ms",
+            }}
+          >
+            {currentText.bottom}
+          </span>
         </div>
       </div>
     </div>
