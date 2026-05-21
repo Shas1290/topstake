@@ -8,7 +8,13 @@ import Navbar from '@/components/Navbar';
 //   title: 'Contact Us | TopStake',
 //   description: 'Get in touch with the TopStake team. We are here to help you build your next big idea.',
 // };
-async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+import { useState } from 'react';
+
+export default function ContactPage() {
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
@@ -23,16 +29,23 @@ async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
       });
 
       if (response.ok) {
-        alert("Message sent successfully!");
+        setToastMessage("Message sent successfully.");
+        setShowToast(true);
         form.reset(); // Clears the form fields after sending
+        setTimeout(() => setShowToast(false), 5000);
       } else {
-        alert("Something went wrong. Please try again.");
+        setToastMessage("Something went wrong. Please try again.");
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 5000);
       }
     } catch (error) {
       console.error(error);
+      setToastMessage("An error occurred. Please try again.");
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 5000);
     }
   }
-export default function ContactPage() {
+
   return (
     <main className={styles.container}>
       {/* Background Ambient Orbs */}
@@ -126,6 +139,24 @@ export default function ContactPage() {
         </div>
 
       </div>
+
+      {/* Toast Notification */}
+      {showToast && (
+        <div className="fixed bottom-6 right-6 z-50 animate-fade-in-up">
+          <div id="toast-simple" className="flex items-center w-full max-w-sm p-4 text-[#a1a5b5] bg-[rgba(10,10,10,0.95)] backdrop-blur-[18px] rounded-lg shadow-[0_8px_30px_rgb(0,0,0,0.5)] border border-white/[0.06]" role="alert">
+            <svg className="w-5 h-5 text-indigo-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m12 18-7 3 7-18 7 18-7-3Zm0 0v-5"/>
+            </svg>
+            <div className="ms-2.5 text-sm border-s border-white/[0.1] ps-3.5 text-white">{toastMessage}</div>
+            <button type="button" onClick={() => setShowToast(false)} className="ms-auto flex items-center justify-center text-[#a1a5b5] hover:text-white bg-transparent box-border border border-transparent hover:bg-white/[0.04] focus:ring-4 focus:ring-white/[0.1] font-medium leading-5 rounded-lg text-sm h-8 w-8 focus:outline-none transition-colors" aria-label="Close">
+              <span className="sr-only">Close</span>
+              <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18 17.94 6M18 18 6.06 6"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
