@@ -9,8 +9,9 @@ function formatTitle(slug: string) {
     .join(" ");
 }
 
-export default function ResourcePage({ params }: { params: { slug: string } }) {
-  const title = formatTitle(params.slug);
+export default async function ResourcePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const title = formatTitle(slug);
 
   return (
     <main className={styles.container}>

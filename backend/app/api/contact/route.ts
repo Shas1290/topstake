@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { sendThankYouEmail } from "@/lib/email";
 
 export async function POST(request: NextRequest) {
   try {
@@ -30,6 +31,11 @@ export async function POST(request: NextRequest) {
     const query = await db.contactQuery.create({
       data: { name, email, subject, message },
     });
+
+    // Send thank-you email (fire-and-forget, don't block the response)
+    sendThankYouEmail({ to: email, name, subject, message }).catch((err) =>
+      console.error("Background email send failed:", err)
+    );
 
     return NextResponse.json(
       {

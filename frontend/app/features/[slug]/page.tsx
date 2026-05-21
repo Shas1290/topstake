@@ -9,8 +9,9 @@ function formatTitle(slug: string) {
     .join(" ");
 }
 
-export default function FeaturePage({ params }: { params: { slug: string } }) {
-  const title = formatTitle(params.slug);
+export default async function FeaturePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const title = formatTitle(slug);
 
   return (
     <main className={styles.container}>

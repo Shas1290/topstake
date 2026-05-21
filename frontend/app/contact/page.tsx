@@ -23,15 +23,31 @@ export default function ContactPage() {
     formData.append("access_key", "856f3bd3-a34e-44f1-b413-176eb1ddd503");
 
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
+      // Send to Web3Forms (admin notification)
+      const web3Response = fetch("https://api.web3forms.com/submit", {
         method: "POST",
         body: formData
       });
 
-      if (response.ok) {
+      // Also send to backend API (saves to DB + sends thank-you email to user)
+      const backendResponse = fetch("https://topstake-backend.vercel.app/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.get("name"),
+          email: formData.get("email"),
+          subject: formData.get("subject"),
+          message: formData.get("message"),
+        }),
+      });
+
+      // Wait for both, but only check Web3Forms for success toast
+      const [w3Res] = await Promise.all([web3Response, backendResponse.catch(() => null)]);
+
+      if (w3Res.ok) {
         setToastMessage("Message sent successfully.");
         setShowToast(true);
-        form.reset(); // Clears the form fields after sending
+        form.reset();
         setTimeout(() => setShowToast(false), 5000);
       } else {
         setToastMessage("Something went wrong. Please try again.");
