@@ -19,7 +19,7 @@ const TEXT_PAIRS: TextPair[] = [
 
 // ─── Shared text classes ─────────────────────────────────────────────────────
 const TEXT_BASE =
-  "font-bold leading-[0.85] tracking-[-0.04em] select-none text-[clamp(4rem,15vw,13rem)] transition-all duration-500 ease-[cubic-bezier(0.76,0,0.24,1)]";
+  "font-bold leading-[0.85] tracking-[-0.04em] select-none text-[clamp(2.5rem,11vw,4rem)] md:text-[clamp(4rem,15vw,13rem)] transition-all duration-500 ease-[cubic-bezier(0.76,0,0.24,1)]";
 const TEXT_DARK = "text-white";
 const TEXT_LIGHT = "text-gray-900";
 
