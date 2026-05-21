@@ -104,7 +104,7 @@ export default function SpotlightReveal(): React.JSX.Element {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onClick={handleVideoClick}
-      className="relative w-full h-screen overflow-hidden bg-black cursor-pointer"
+      className="relative w-full h-[100svh] overflow-hidden bg-black cursor-pointer"
     >
       {/* ========================================== */}
       {/* 1. BOTTOM LAYER: The Main Background Video */}
@@ -147,7 +147,7 @@ export default function SpotlightReveal(): React.JSX.Element {
       {/* ========================================== */}
       {/* 3. TOP LAYER: Text (always above circle)   */}
       {/* ========================================== */}
-      <div className="absolute inset-0 z-20 flex flex-col justify-between px-6 sm:px-10 md:px-16 pt-[100px] pb-10 md:pt-[120px] md:pb-14 pointer-events-none">
+      <div className="absolute inset-0 z-20 flex flex-col justify-between px-6 sm:px-10 md:px-16 pt-[130px] pb-20 md:pt-[120px] md:pb-14 pointer-events-none">
         <div className="flex items-start pt-2">
           <span
             className={`${TEXT_BASE} ${TEXT_DARK} drop-shadow-[0_4px_60px_rgba(0,0,0,0.4)] ${getTextClasses()}`}

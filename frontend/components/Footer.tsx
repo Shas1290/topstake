@@ -21,11 +21,11 @@ export default function Footer() {
           </label>
           <div className={styles.columnContent}>
             <ul className={styles.linkList}>
-              <li><Link href="#">Podcasters</Link></li>
-              <li><Link href="#">Video creators</Link></li>
-              <li><Link href="#">Musicians</Link></li>
-              <li><Link href="#">Artists</Link></li>
-              <li><Link href="#">Game devs</Link></li>
+              <li><Link href="/creators/web-developers">Web Developers</Link></li>
+              <li><Link href="/creators/video-editors">Video Editors</Link></li>
+              <li><Link href="/creators/app-developers">App Developers</Link></li>
+              <li><Link href="/creators/logo-designers">Logo Designers</Link></li>
+              <li><Link href="/creators/game-devs">Game devs</Link></li>
             </ul>
           </div>
         </div>
@@ -37,13 +37,13 @@ export default function Footer() {
           </label>
           <div className={styles.columnContent}>
             <ul className={styles.linkList}>
-              <li><Link href="#">Create on your terms</Link></li>
-              <li><Link href="#">Where real community thrives</Link></li>
-              <li><Link href="#">Grow your community</Link></li>
-              <li><Link href="#">Support for your business</Link></li>
-              <li><Link href="#">Earning made easy</Link></li>
-              <li><Link href="#">↳ Start a membership</Link></li>
-              <li><Link href="#">↳ Set up a shop</Link></li>
+              <li><Link href="/features/create-on-your-terms">Create on your terms</Link></li>
+              <li><Link href="/features/community">Where real community thrives</Link></li>
+              <li><Link href="/features/grow-business">Grow your Business</Link></li>
+              <li><Link href="/features/support">Support for your business</Link></li>
+              <li><Link href="/features/earning">Earning made easy</Link></li>
+              <li><Link href="/features/start-membership">↳ Start a membership</Link></li>
+              <li><Link href="/features/setup-shop">↳ Set up a shop</Link></li>
             </ul>
           </div>
         </div>
@@ -55,7 +55,7 @@ export default function Footer() {
           </label>
           <div className={styles.columnContent}>
             <ul className={styles.linkList}>
-              <li><Link href="#">Starting a TopStake is free</Link></li>
+              <li><Link href="/pricing">Starting a TopStake is free</Link></li>
             </ul>
           </div>
         </div>
@@ -67,11 +67,11 @@ export default function Footer() {
           </label>
           <div className={styles.columnContent}>
             <ul className={styles.linkList}>
-              <li><Link href="#">TopStake for Creators</Link></li>
-              <li><Link href="#">Newsroom</Link></li>
-              <li><Link href="#">Help Center & FAQ</Link></li>
-              <li><Link href="#">Partners & integrations</Link></li>
-              <li><Link href="#">Mobile</Link></li>
+              <li><Link href="/resources/for-creators">TopStake for Creators</Link></li>
+              <li><Link href="/resources/newsroom">Newsroom</Link></li>
+              <li><Link href="/resources/help-center">Help Center & FAQ</Link></li>
+              <li><Link href="/resources/partners">Partners & integrations</Link></li>
+              <li><Link href="/resources/mobile">Mobile</Link></li>
             </ul>
           </div>
         </div>
@@ -84,14 +84,14 @@ export default function Footer() {
           <div className={styles.columnContent}>
             <ul className={styles.linkList}>
               <li><Link href="/about">About</Link></li>
-              <li><Link href="#">Press</Link></li>
-              <li><Link href="#">Careers</Link></li>
-              <li><Link href="#">Terms of Use & policies</Link></li>
-              <li><Link href="#">Privacy policy</Link></li>
-              <li><Link href="#">Cookie policy</Link></li>
-              <li><Link href="#">Accessibility</Link></li>
-              <li><Link href="#">Impressum</Link></li>
-              <li><Link href="#">Brand assets & guidelines</Link></li>
+              <li><Link href="/company/press">Press</Link></li>
+              <li><Link href="/company/careers">Careers</Link></li>
+              <li><Link href="/company/terms">Terms of Use & policies</Link></li>
+              <li><Link href="/company/privacy">Privacy policy</Link></li>
+              <li><Link href="/company/cookie">Cookie policy</Link></li>
+              <li><Link href="/company/accessibility">Accessibility</Link></li>
+              <li><Link href="/company/impressum">Impressum</Link></li>
+              <li><Link href="/company/brand-assets">Brand assets & guidelines</Link></li>
             </ul>
           </div>
         </div>
