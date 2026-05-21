@@ -1,13 +1,37 @@
+"use client";
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import styles from './contact.module.css';
 import Navbar from '@/components/Navbar';
 
-export const metadata: Metadata = {
-  title: 'Contact Us | TopStake',
-  description: 'Get in touch with the TopStake team. We are here to help you build your next big idea.',
-};
+// export const metadata: Metadata = {
+//   title: 'Contact Us | TopStake',
+//   description: 'Get in touch with the TopStake team. We are here to help you build your next big idea.',
+// };
+async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    
+    // Add your unique Web3Forms key here
+    formData.append("access_key", "856f3bd3-a34e-44f1-b413-176eb1ddd503");
 
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+
+      if (response.ok) {
+        alert("Message sent successfully!");
+        form.reset(); // Clears the form fields after sending
+      } else {
+        alert("Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 export default function ContactPage() {
   return (
     <main className={styles.container}>
